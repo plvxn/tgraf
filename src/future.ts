@@ -1,4 +1,4 @@
-import { ReplyParameters } from '@tgraf/types'
+import { ReplyParameters } from '@plvxn/tgraf-types'
 import Context from './context'
 import { Middleware } from './middleware'
 

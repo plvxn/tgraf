@@ -1,16 +1,16 @@
-import * as Typegram from '@tgraf/types'
+import * as Typegram from '@plvxn/tgraf-types'
 
 // internal type provisions
-export * from '@tgraf/types/api'
-export * from '@tgraf/types/inline'
-export * from '@tgraf/types/manage'
-export * from '@tgraf/types/markup'
-export * from '@tgraf/types/message'
-export * from '@tgraf/types/methods'
-export * from '@tgraf/types/passport'
-export * from '@tgraf/types/payment'
-export * from '@tgraf/types/settings'
-export * from '@tgraf/types/update'
+export * from '@plvxn/tgraf-types/api'
+export * from '@plvxn/tgraf-types/inline'
+export * from '@plvxn/tgraf-types/manage'
+export * from '@plvxn/tgraf-types/markup'
+export * from '@plvxn/tgraf-types/message'
+export * from '@plvxn/tgraf-types/methods'
+export * from '@plvxn/tgraf-types/passport'
+export * from '@plvxn/tgraf-types/payment'
+export * from '@plvxn/tgraf-types/settings'
+export * from '@plvxn/tgraf-types/update'
 
 // telegraf input file definition
 interface InputFileByPath {

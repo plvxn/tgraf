@@ -1,37 +1,45 @@
-# tgraf
+# @plvxn/tgraf
 
-Modern Telegram Bot Framework for Node.js -- a fork of [telegraf](https://github.com/telegraf/telegraf) with Bot API 9.5 support.
+Modern Telegram Bot Framework for Node.js — fork of [telegraf](https://github.com/telegraf/telegraf) with Bot API 9.5 support.
+
+[![Bot API](https://img.shields.io/badge/Bot%20API-v9.5-f36caf.svg?style=flat-square&logo=Telegram)](https://core.telegram.org/bots/api)
+[![npm](https://img.shields.io/npm/v/@plvxn/tgraf?style=flat-square)](https://www.npmjs.com/package/@plvxn/tgraf)
 
 ## Why this fork
 
-The original telegraf library supports Bot API 7.1. This fork brings full support for Bot API 9.5, including all new methods, types, and features introduced in recent API versions.
+The original telegraf supports Bot API 7.1. This fork adds full support for Bot API 9.5: new methods, types, business accounts, gifts, stories, checklists, and more.
 
 ## Installation
 
 ```bash
-npm install tgraf
+npm install @plvxn/tgraf
 ```
 
 ## Quick start
 
 ```js
-const { Telegraf } = require('tgraf');
+const { Telegraf } = require('@plvxn/tgraf')
+const { message } = require('@plvxn/tgraf/filters')
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN)
 
-bot.start((ctx) => ctx.reply('Welcome'));
-bot.help((ctx) => ctx.reply('Send me a message and I will echo it back'));
-bot.on('text', (ctx) => ctx.reply(ctx.message.text));
+bot.start((ctx) => ctx.reply('Welcome'))
+bot.help((ctx) => ctx.reply('Send me a message'))
+bot.on(message('text'), (ctx) => ctx.reply(ctx.message.text))
 
-bot.launch();
+bot.launch()
 
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
 ```
+
+## API compatibility
+
+The API is compatible with telegraf. Use the [original telegraf documentation](https://telegraf.js.org) — the API surface is the same. This fork adds new methods and types from Bot API 9.5.
 
 ## Credits
 
-This project is a fork of [telegraf](https://github.com/telegraf/telegraf) by the Telegraf contributors. All credit for the original architecture and design goes to them.
+Fork of [telegraf](https://github.com/telegraf/telegraf) by the Telegraf contributors.
 
 ## License
 

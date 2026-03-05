@@ -1,16 +1,16 @@
 {
-  "name": "tgraf",
+  "name": "@plvxn/tgraf",
   "version": "5.0.0",
-  "description": "Modern Telegram Bot Framework — tgraf fork with Bot API 9.5 support",
+  "description": "Modern Telegram Bot Framework — fork with Bot API 9.5 support",
   "license": "MIT",
-  "author": "The tgraf Contributors",
-  "homepage": "https://github.com/tgraf/tgraf#readme",
+  "author": "tgraf contributors",
+  "homepage": "https://github.com/plvxn/tgraf#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tgraf/tgraf.git"
+    "url": "git+https://github.com/plvxn/tgraf.git"
   },
   "bugs": {
-    "url": "https://github.com/tgraf/tgraf/issues"
+    "url": "https://github.com/plvxn/tgraf/issues"
   },
   "main": "lib/index.js",
   "exports": {
@@ -94,7 +94,7 @@
   },
   "types": "./typings/index.d.ts",
   "dependencies": {
-    "@tgraf/types": "^9.5.0",
+    "@plvxn/tgraf-types": "^9.5.0",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.5",
     "mri": "^1.2.0",
@@ -126,6 +126,7 @@
   },
   "keywords": [
     "tgraf",
+    "telegraf",
     "telegram",
     "telegram bot api",
     "bot",

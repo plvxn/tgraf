@@ -467,7 +467,7 @@ export class Telegram extends ApiClient {
       chat_id: chatId,
       type: 'regular',
       question,
-      options,
+      options: options.map((text) => ({ text })),
       ...extra,
     })
   }
@@ -488,7 +488,7 @@ export class Telegram extends ApiClient {
       chat_id: chatId,
       type: 'quiz',
       question,
-      options,
+      options: options.map((text) => ({ text })),
       ...extra,
     })
   }
@@ -864,13 +864,10 @@ export class Telegram extends ApiClient {
     extra?: tt.ExtraEditMessageText
   ) {
     const t = FmtString.normalise(text)
-    return this.callApi('editMessageText', {
-      chat_id: chatId,
-      message_id: messageId,
-      inline_message_id: inlineMessageId,
-      ...extra,
-      ...t,
-    })
+    const params = inlineMessageId
+      ? { inline_message_id: inlineMessageId, ...extra, ...t }
+      : { chat_id: chatId, message_id: messageId, ...extra, ...t }
+    return this.callApi('editMessageText', params as tg.Opts<'editMessageText'>)
   }
 
   /**
@@ -1315,12 +1312,14 @@ export class Telegram extends ApiClient {
   setStickerSetThumbnail(
     name: string,
     userId: number,
-    thumbnail?: tg.Opts<'setStickerSetThumbnail'>['thumbnail']
+    thumbnail?: tg.Opts<'setStickerSetThumbnail'>['thumbnail'],
+    format?: 'static' | 'animated' | 'video'
   ) {
     return this.callApi('setStickerSetThumbnail', {
       name,
       user_id: userId,
       thumbnail,
+      format: format ?? 'static',
     })
   }
 
@@ -1614,315 +1613,6 @@ export class Telegram extends ApiClient {
   }: { forChannels?: boolean } = {}) {
     return this.callApi('getMyDefaultAdministratorRights', {
       for_channels: forChannels,
-    })
-  }
-
-  getBusinessConnection(businessConnectionId: string) {
-    return this.callApi('getBusinessConnection', {
-      business_connection_id: businessConnectionId,
-    })
-  }
-
-  refundStarPayment(userId: number, telegramPaymentChargeId: string) {
-    return this.callApi('refundStarPayment', {
-      user_id: userId,
-      telegram_payment_charge_id: telegramPaymentChargeId,
-    })
-  }
-
-  getStarTransactions(offset?: number, limit?: number) {
-    return this.callApi('getStarTransactions', { offset, limit })
-  }
-
-  sendPaidMedia(
-    chatId: number | string,
-    starCount: number,
-    media: tg.Opts<'sendPaidMedia'>['media'],
-    extra?: tt.ExtraPaidMedia
-  ) {
-    return this.callApi('sendPaidMedia', {
-      chat_id: chatId,
-      star_count: starCount,
-      media,
-      ...fmtCaption(extra),
-    })
-  }
-
-  createChatSubscriptionInviteLink(
-    chatId: number | string,
-    subscriptionPeriod: number,
-    subscriptionPrice: number,
-    extra?: { name?: string }
-  ) {
-    return this.callApi('createChatSubscriptionInviteLink', {
-      chat_id: chatId,
-      subscription_period: subscriptionPeriod,
-      subscription_price: subscriptionPrice,
-      ...extra,
-    })
-  }
-
-  editChatSubscriptionInviteLink(
-    chatId: number | string,
-    inviteLink: string,
-    extra?: { name?: string }
-  ) {
-    return this.callApi('editChatSubscriptionInviteLink', {
-      chat_id: chatId,
-      invite_link: inviteLink,
-      ...extra,
-    })
-  }
-
-  sendGift(args: tg.Opts<'sendGift'>) {
-    return this.callApi('sendGift', args)
-  }
-
-  getAvailableGifts() {
-    return this.callApi('getAvailableGifts', {})
-  }
-
-  savePreparedInlineMessage(
-    userId: number,
-    result: tg.InlineQueryResult,
-    extra?: Omit<tg.Opts<'savePreparedInlineMessage'>, 'user_id' | 'result'>
-  ) {
-    return this.callApi('savePreparedInlineMessage', {
-      user_id: userId,
-      result,
-      ...extra,
-    })
-  }
-
-  setUserEmojiStatus(
-    userId: number,
-    extra?: Omit<tg.Opts<'setUserEmojiStatus'>, 'user_id'>
-  ) {
-    return this.callApi('setUserEmojiStatus', {
-      user_id: userId,
-      ...extra,
-    })
-  }
-
-  editUserStarSubscription(
-    userId: number,
-    telegramPaymentChargeId: string,
-    isCanceled: boolean
-  ) {
-    return this.callApi('editUserStarSubscription', {
-      user_id: userId,
-      telegram_payment_charge_id: telegramPaymentChargeId,
-      is_canceled: isCanceled,
-    })
-  }
-
-  verifyUser(userId: number, customDescription?: string) {
-    return this.callApi('verifyUser', {
-      user_id: userId,
-      custom_description: customDescription,
-    })
-  }
-
-  verifyChat(chatId: number | string, customDescription?: string) {
-    return this.callApi('verifyChat', {
-      chat_id: chatId,
-      custom_description: customDescription,
-    })
-  }
-
-  removeUserVerification(userId: number) {
-    return this.callApi('removeUserVerification', { user_id: userId })
-  }
-
-  removeChatVerification(chatId: number | string) {
-    return this.callApi('removeChatVerification', { chat_id: chatId })
-  }
-
-  postStory(args: tg.Opts<'postStory'>) {
-    return this.callApi('postStory', args)
-  }
-
-  editStory(args: tg.Opts<'editStory'>) {
-    return this.callApi('editStory', args)
-  }
-
-  deleteStory(businessConnectionId: string, storyId: number) {
-    return this.callApi('deleteStory', {
-      business_connection_id: businessConnectionId,
-      story_id: storyId,
-    })
-  }
-
-  transferGift(args: tg.Opts<'transferGift'>) {
-    return this.callApi('transferGift', args)
-  }
-
-  upgradeGift(args: tg.Opts<'upgradeGift'>) {
-    return this.callApi('upgradeGift', args)
-  }
-
-  convertGiftToStars(businessConnectionId: string, ownedGiftId: string) {
-    return this.callApi('convertGiftToStars', {
-      business_connection_id: businessConnectionId,
-      owned_gift_id: ownedGiftId,
-    })
-  }
-
-  getBusinessAccountGifts(args: tg.Opts<'getBusinessAccountGifts'>) {
-    return this.callApi('getBusinessAccountGifts', args)
-  }
-
-  transferBusinessAccountStars(
-    businessConnectionId: string,
-    starCount: number
-  ) {
-    return this.callApi('transferBusinessAccountStars', {
-      business_connection_id: businessConnectionId,
-      star_count: starCount,
-    })
-  }
-
-  getBusinessAccountStarBalance(businessConnectionId: string) {
-    return this.callApi('getBusinessAccountStarBalance', {
-      business_connection_id: businessConnectionId,
-    })
-  }
-
-  setBusinessAccountGiftSettings(args: tg.Opts<'setBusinessAccountGiftSettings'>) {
-    return this.callApi('setBusinessAccountGiftSettings', args)
-  }
-
-  setBusinessAccountProfilePhoto(args: tg.Opts<'setBusinessAccountProfilePhoto'>) {
-    return this.callApi('setBusinessAccountProfilePhoto', args)
-  }
-
-  removeBusinessAccountProfilePhoto(
-    businessConnectionId: string,
-    isPublic?: boolean
-  ) {
-    return this.callApi('removeBusinessAccountProfilePhoto', {
-      business_connection_id: businessConnectionId,
-      is_public: isPublic,
-    })
-  }
-
-  setBusinessAccountBio(businessConnectionId: string, bio?: string) {
-    return this.callApi('setBusinessAccountBio', {
-      business_connection_id: businessConnectionId,
-      bio,
-    })
-  }
-
-  setBusinessAccountUsername(businessConnectionId: string, username?: string) {
-    return this.callApi('setBusinessAccountUsername', {
-      business_connection_id: businessConnectionId,
-      username,
-    })
-  }
-
-  setBusinessAccountName(
-    businessConnectionId: string,
-    firstName: string,
-    lastName?: string
-  ) {
-    return this.callApi('setBusinessAccountName', {
-      business_connection_id: businessConnectionId,
-      first_name: firstName,
-      last_name: lastName,
-    })
-  }
-
-  deleteBusinessMessages(businessConnectionId: string, messageIds: number[]) {
-    return this.callApi('deleteBusinessMessages', {
-      business_connection_id: businessConnectionId,
-      message_ids: messageIds,
-    })
-  }
-
-  readBusinessMessage(
-    businessConnectionId: string,
-    chatId: number | string,
-    messageId: number
-  ) {
-    return this.callApi('readBusinessMessage', {
-      business_connection_id: businessConnectionId,
-      chat_id: chatId,
-      message_id: messageId,
-    })
-  }
-
-  giftPremiumSubscription(args: tg.Opts<'giftPremiumSubscription'>) {
-    return this.callApi('giftPremiumSubscription', args)
-  }
-
-  sendChecklist(args: tg.Opts<'sendChecklist'>) {
-    return this.callApi('sendChecklist', args)
-  }
-
-  editMessageChecklist(args: tg.Opts<'editMessageChecklist'>) {
-    return this.callApi('editMessageChecklist', args)
-  }
-
-  getMyStarBalance() {
-    return this.callApi('getMyStarBalance', {})
-  }
-
-  approveSuggestedPost(chatId: number | string, messageId: number) {
-    return this.callApi('approveSuggestedPost', {
-      chat_id: chatId,
-      message_id: messageId,
-    })
-  }
-
-  declineSuggestedPost(args: tg.Opts<'declineSuggestedPost'>) {
-    return this.callApi('declineSuggestedPost', args)
-  }
-
-  getUserGifts(userId: number, offset?: string, limit?: number) {
-    return this.callApi('getUserGifts', {
-      user_id: userId,
-      offset,
-      limit,
-    })
-  }
-
-  getChatGifts(chatId: number | string, offset?: string, limit?: number) {
-    return this.callApi('getChatGifts', {
-      chat_id: chatId,
-      offset,
-      limit,
-    })
-  }
-
-  repostStory(args: tg.Opts<'repostStory'>) {
-    return this.callApi('repostStory', args)
-  }
-
-  sendMessageDraft(args: tg.Opts<'sendMessageDraft'>) {
-    return this.callApi('sendMessageDraft', args)
-  }
-
-  getUserProfileAudios(userId: number, offset?: number, limit?: number) {
-    return this.callApi('getUserProfileAudios', {
-      user_id: userId,
-      offset,
-      limit,
-    })
-  }
-
-  setMyProfilePhoto(photo: tg.Opts<'setMyProfilePhoto'>['photo']) {
-    return this.callApi('setMyProfilePhoto', { photo })
-  }
-
-  removeMyProfilePhoto(photoId: string) {
-    return this.callApi('removeMyProfilePhoto', { photo_id: photoId })
-  }
-
-  setChatMemberTag(chatId: number | string, userId: number, tag?: string) {
-    return this.callApi('setChatMemberTag', {
-      chat_id: chatId,
-      user_id: userId,
-      tag,
     })
   }
 

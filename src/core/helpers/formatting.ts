@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { MessageEntity, User } from '@tgraf/types'
+import { MessageEntity, User } from '@plvxn/tgraf-types'
 import { Any, zip } from './util'
 
 export type Nestable<Kind extends string> =

@@ -141,35 +141,6 @@ export class Context<U extends Deunionize<tg.Update> = tg.Update> {
     return this.update.removed_chat_boost as PropOr<U, 'removed_chat_boost'>
   }
 
-  get businessConnection() {
-    return this.update.business_connection as PropOr<U, 'business_connection'>
-  }
-
-  get businessMessage() {
-    return this.update.business_message as PropOr<U, 'business_message'>
-  }
-
-  get editedBusinessMessage() {
-    return this.update.edited_business_message as PropOr<
-      U,
-      'edited_business_message'
-    >
-  }
-
-  get deletedBusinessMessages() {
-    return this.update.deleted_business_messages as PropOr<
-      U,
-      'deleted_business_messages'
-    >
-  }
-
-  get purchasedPaidMedia() {
-    return this.update.purchased_paid_media as PropOr<
-      U,
-      'purchased_paid_media'
-    >
-  }
-
   /** Shorthand for any `message` object present in the current update. One of
    * `message`, `edited_message`, `channel_post`, `edited_channel_post` or
    * `callback_query.message`
@@ -1535,65 +1506,6 @@ export class Context<U extends Deunionize<tg.Update> = tg.Update> {
     extra?: Parameters<Telegram['getMyDefaultAdministratorRights']>[0]
   ) {
     return this.telegram.getMyDefaultAdministratorRights(extra)
-  }
-
-  sendPaidMedia(
-    starCount: number,
-    media: tg.Opts<'sendPaidMedia'>['media'],
-    extra?: tt.ExtraPaidMedia
-  ) {
-    this.assert(this.chat, 'sendPaidMedia')
-    return this.telegram.sendPaidMedia(this.chat.id, starCount, media, {
-      message_thread_id: getThreadId(this),
-      ...extra,
-    })
-  }
-
-  createChatSubscriptionInviteLink(
-    ...args: Shorthand<'createChatSubscriptionInviteLink'>
-  ) {
-    this.assert(this.chat, 'createChatSubscriptionInviteLink')
-    return this.telegram.createChatSubscriptionInviteLink(
-      this.chat.id,
-      ...args
-    )
-  }
-
-  editChatSubscriptionInviteLink(
-    ...args: Shorthand<'editChatSubscriptionInviteLink'>
-  ) {
-    this.assert(this.chat, 'editChatSubscriptionInviteLink')
-    return this.telegram.editChatSubscriptionInviteLink(this.chat.id, ...args)
-  }
-
-  getUserGifts(offset?: string, limit?: number) {
-    this.assert(this.from, 'getUserGifts')
-    return this.telegram.getUserGifts(this.from.id, offset, limit)
-  }
-
-  getChatGifts(offset?: string, limit?: number) {
-    this.assert(this.chat, 'getChatGifts')
-    return this.telegram.getChatGifts(this.chat.id, offset, limit)
-  }
-
-  setChatMemberTag(userId: number, tag?: string) {
-    this.assert(this.chat, 'setChatMemberTag')
-    return this.telegram.setChatMemberTag(this.chat.id, userId, tag)
-  }
-
-  approveSuggestedPost(messageId: number) {
-    this.assert(this.chat, 'approveSuggestedPost')
-    return this.telegram.approveSuggestedPost(this.chat.id, messageId)
-  }
-
-  verifyChat(customDescription?: string) {
-    this.assert(this.chat, 'verifyChat')
-    return this.telegram.verifyChat(this.chat.id, customDescription)
-  }
-
-  removeChatVerification() {
-    this.assert(this.chat, 'removeChatVerification')
-    return this.telegram.removeChatVerification(this.chat.id)
   }
 }
 

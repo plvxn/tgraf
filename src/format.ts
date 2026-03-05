@@ -1,4 +1,4 @@
-import { User } from '@tgraf/types'
+import { User } from '@plvxn/tgraf-types'
 import {
   FmtString,
   createFmt,
