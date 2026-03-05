@@ -1,4 +1,4 @@
-import { User } from '@telegraf/types'
+import { User } from '@tgraf/types'
 import {
   FmtString,
   createFmt,

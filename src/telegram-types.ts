@@ -144,6 +144,7 @@ export type ExtraEditForumTopic = MakeExtra<
   'editForumTopic',
   'message_thread_id'
 >
+export type ExtraPaidMedia = MakeExtra<'sendPaidMedia', 'star_count' | 'media'>
 
 export type MediaGroup =
   | readonly (InputMediaPhoto | InputMediaVideo)[]

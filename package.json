@@ -1,16 +1,16 @@
 {
-  "name": "telegraf",
-  "version": "4.16.3",
-  "description": "Modern Telegram Bot Framework",
+  "name": "tgraf",
+  "version": "5.0.0",
+  "description": "Modern Telegram Bot Framework — tgraf fork with Bot API 9.5 support",
   "license": "MIT",
-  "author": "The Telegraf Contributors",
-  "homepage": "https://telegraf.js.org",
+  "author": "The tgraf Contributors",
+  "homepage": "https://github.com/tgraf/tgraf#readme",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/telegraf/telegraf.git"
+    "url": "https://github.com/tgraf/tgraf.git"
   },
   "bugs": {
-    "url": "https://github.com/telegraf/telegraf/issues"
+    "url": "https://github.com/tgraf/tgraf/issues"
   },
   "main": "lib/index.js",
   "exports": {
@@ -67,7 +67,7 @@
     "session.*"
   ],
   "bin": {
-    "telegraf": "lib/cli.mjs"
+    "tgraf": "lib/cli.mjs"
   },
   "scripts": {
     "prepare": "npm run --silent build",
@@ -90,11 +90,11 @@
   },
   "type": "commonjs",
   "engines": {
-    "node": "^12.20.0 || >=14.13.1"
+    "node": ">=16.0.0"
   },
   "types": "./typings/index.d.ts",
   "dependencies": {
-    "@telegraf/types": "^7.1.0",
+    "@tgraf/types": "^9.5.0",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.5",
     "mri": "^1.2.0",
@@ -125,11 +125,12 @@
     "typescript": "^5.2.2"
   },
   "keywords": [
-    "telegraf",
+    "tgraf",
     "telegram",
     "telegram bot api",
     "bot",
     "botapi",
-    "bot framework"
+    "bot framework",
+    "bot api 9.5"
   ]
 }

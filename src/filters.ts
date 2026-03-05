@@ -3,7 +3,7 @@ import type {
   CommonMessageBundle,
   Message,
   Update,
-} from '@telegraf/types'
+} from '@tgraf/types'
 import { DistinctKeys, KeyedDistinct, Guarded } from './core/helpers/util'
 
 export type Filter<U extends Update> = (update: Update) => update is U
@@ -84,6 +84,34 @@ export const callbackQuery =
     if (!('callback_query' in update)) return false
     for (const key of keys) {
       if (!(key in update.callback_query)) return false
+    }
+    return true
+  }
+
+export const businessMessage =
+  <Ks extends DistinctKeys<CommonMessageBundle>[]>(...keys: Ks) =>
+  (
+    update: Update
+  ): update is Update.BusinessMessageUpdate<
+    KeyedDistinct<CommonMessageBundle, Ks[number]>
+  > => {
+    if (!('business_message' in update)) return false
+    for (const key of keys) {
+      if (!(key in update.business_message)) return false
+    }
+    return true
+  }
+
+export const editedBusinessMessage =
+  <Ks extends DistinctKeys<CommonMessageBundle>[]>(...keys: Ks) =>
+  (
+    update: Update
+  ): update is Update.EditedBusinessMessageUpdate<
+    KeyedDistinct<CommonMessageBundle, Ks[number]>
+  > => {
+    if (!('edited_business_message' in update)) return false
+    for (const key of keys) {
+      if (!(key in update.edited_business_message)) return false
     }
     return true
   }
