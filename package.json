@@ -1,6 +1,6 @@
 {
   "name": "@plvxn/tgraf",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Modern Telegram Bot Framework — fork with Bot API 9.5 support",
   "license": "MIT",
   "author": "tgraf contributors",
